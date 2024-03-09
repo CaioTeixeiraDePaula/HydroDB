@@ -367,3 +367,15 @@ def _to_list(_el):
 
 def _to_tuple(_el):
     return (_el)
+
+
+
+
+"""#Você
+Foi embananado
+
+```python
+def banana(você:str):
+    print(você)
+```
+"""
