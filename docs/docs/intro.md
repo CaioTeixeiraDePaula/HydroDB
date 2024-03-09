@@ -4,51 +4,47 @@ sidebar_position: 1
 
 # About HydroDB
 
-`HydroDB` is a non-relation database librarie for python, thought to be easy to use and agile. It allows you yo create `JSON` files and storage data on them, with the desired keys, as well as allows to search data, update and delete data of the `JSON` file
+`HydroDB` is a non-relational database library for Python, designed to be easy to use and agile. It allows you to create `JSON` files and store data in them with desired keys. Additionally, it enables searching, updating, and deleting data within the `JSON` file.
 
-## Why HydroDB Exists
+## Why HydroDB exists?
 
-The idea of HydroDB surged when i was at college and in one class we had to use TinyDB. I cant argue that TinyDB isn't a good lib for non-relational database, but i felt something was missing. 
-After studing, I decided to create my on non-relational databe lib.
+The idea for HydroDB emerged during my college days when I had to use TinyDB in one of my classes. While TinyDB is a good library for non-relational databases, I felt that something was missing. After studying the subject, I decided to create my own non-relational database library.
 
-## Seting up 
+## Setting Up
 
-### What do you need (for version 0.1.0)
+### Requirements (for version 0.1.0)
 
-- [Python 3](https://www.python.org/downloads/) version 3.12.2 or above:
-  - And `yaspin`python mcolude at version 3.0.1 or above. For that use the following command on terminal:
+- [Python 3](https://www.python.org/downloads/) version 3.12.2 or above.
+  - Also, the `yaspin` Python module version 3.0.1 or above. Install it using the following command in the terminal:
 
 ```bash
-  pip install yaspin
+pip install yaspin
 ```
 
-### Getting the module
+### Getting the Module
 
-Right now the `HydroDB` module isn't on pip, so to uses it you'll have to fork the directory :(
+Currently, the `HydroDB` module is not available on PyPI. To use it, you'll need to fork the directory:
 
-- Go to [HydroDB](https://github.com/CaioTeixeiraDePaula/HydroDB) repository and follow the instructios. In this case you can download the `.zip` file or clone the repository
+- Visit the [HydroDB](https://github.com/CaioTeixeiraDePaula/HydroDB) repository and follow the instructions. You can download the `.zip` file or clone the repository.
 
 ### Downloading:
 
-- Go to **tags** ad chose the laste version that appears
-- Download the `.zip` file
+- Navigate to the **tags** section and select the latest version.
+- Download the `.zip` file.
 
-### Using:
+### Usage:
 
-To use the lib just copy the `hydrodb` directory to your project
-> The project folders structure shoul be like this:
+To use the library, copy the `hydrodb` directory to your project. The project folder structure should look like this:
 
 ```
-    you-project-dir/
-        |--> main.py
-        |--> modules/
-        |--> hydrodb/
- ```       
+your-project-dir/
+    |--> main.py
+    |--> modules/
+    |--> hydrodb/
+```
 
-- Into `main.py` to import, just uses the ``` from hydrodb import *```. Shoul be like that
+
 ```python
 from hydrodb import *
-
 # rest of your code
-
 ```
