@@ -43,10 +43,8 @@ your-project-dir/
     |--> hydrodb/
 ```
 
-In your `main.py` file, import the library using:
 
 ```python
 from hydrodb import *
-
-# Rest of your code
+# rest of your code
 ```
