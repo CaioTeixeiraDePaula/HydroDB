@@ -38,10 +38,12 @@ Right now the `HydroDB` module isn't on pip, so to uses it you'll have to fork t
 To use the lib just copy the `hydrodb` directory to your project
 > The project folders structure shoul be like this:
 
+```
     you-project-dir/
         |--> main.py
         |--> modules/
         |--> hydrodb/
+ ```       
 
 - Into `main.py` to import, just uses the ``` from hydrodb import *```. Shoul be like that
 ```python
