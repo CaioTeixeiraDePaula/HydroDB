@@ -83,6 +83,54 @@ hydro.add(
 - `values`: tuple --> These are the values for each column selected.
 
 
+### Quearry()
+
+This function is used to get values from a table.
+
+
+```python
+hydro.update(
+    table_name="Table_1",
+    columns=["name", "age"],
+    filter="model = Hydro"
+)
+```
+
+```bash
+# expected output: [{"model":"Hydro, "year":2024}]
+```
+**NOTE:** A string is returned
+
+- `table_name`: str --> Is the name of the table to be querried.
+
+- `columns`: list --> Here, is the values you want to receve. If None, the entire row is returned.
+
+- `filter`: str --> Is the parameter to querry a specific group of elements or a single element. If non filter parameter is passed, the entire table will be returned.
+
+
+### Update()
+
+The update funcions serves to update values from rows, or a single row.
+If you want to update a single row, uses the element `id` as the filter parameter.
+
+```python
+hydro.update(
+    table_name="Table_1",
+    columns=["name", "age"],
+    values=["Caio", 19],
+    filter="name = James"
+)
+```
+
+- `table_name`:str --> Is the table to update a row, or a group of rows.
+
+- `columns`:list --> These are the list you want to change of each row querried.
+
+- `values`:list --> The values to be updated to the current row data.
+
+- `filter`:str --> Specifies the groupe of elements or a single element to be updated.
+
+
 ### Delete()
 
 This function removes an entire row from the table that has the specified value passed in.
