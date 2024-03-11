@@ -1,1 +1,1 @@
-from .filemenager import *
+from .filemanager import *

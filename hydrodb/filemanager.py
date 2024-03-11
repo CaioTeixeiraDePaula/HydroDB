@@ -21,7 +21,7 @@ class HydroDB:
             self.default_dir_path += f"/{optional_path}"
 
     
-    def create(self, tables_names:list, columns:tuple=None, primary_key:list=["id"]) -> None:
+    def create(self, tables:list, columns:tuple=None, primary_key:list=["id"]) -> None:
         """### Fuction used to create the tables with theirs columns
 
         The list of tables tells the functions the ammount of tables to be created and with theirs names. 
@@ -37,7 +37,7 @@ class HydroDB:
 
         Note: primary_key is for future updates
         """
-        _create_table(tables_names=tables_names, columns=columns, db_dir_path=self.default_dir_path, primary_key=primary_key)
+        _create_table(tables_names=tables, columns=columns, db_dir_path=self.default_dir_path, primary_key=primary_key)
 
     
     def add(self, tables_names:list , into:tuple, values:tuple):
@@ -72,13 +72,13 @@ class HydroDB:
             
                 _open_to_write(table_name=table_name, db_dir_path=self.default_dir_path, data_to_write=row_dict, data_index="rows")
             
-            # success_message("Data added with success")
+            success_message("Data added with success")
 
         except Exception as e:
             fail_message(f"{e}")
 
 
-    def querry(self, table_name:str, columns:list=None, filter:str=None):
+    def querry(self, table:str, columns:list=None, filter:str=None):
         """### Function used to search values from tables
         
         #### Params ####
@@ -94,80 +94,39 @@ class HydroDB:
         filtered_table:dict = {}
 
         if filter is None:
-            filtering = _search(table_name= table_name, columns= columns, db_dir_path=self.default_dir_path, data_index='rows')
+            filtering = _search(table_name= table, columns= columns, db_dir_path=self.default_dir_path, data_index='rows')
         else:
-            filtering = _search(table_name= table_name, columns= columns, db_dir_path= self.default_dir_path, filter=filter, data_index='rows')
+            filtering = _search(table_name= table, columns= columns, db_dir_path= self.default_dir_path, filter=filter, data_index='rows')
 
         filtered_table = filtering
 
         return filtered_table 
     
 
-    def update(self, table_name: str, columns: list, values: list, filter: str):
-        """Update data in the specified table based on a filter."""
+    def update(self, table:str, columns:list, values:list, filter:str):
+        """### Updates
+        """
         
-        try:
-            # Fetch data to be updated
-            rows_to_update = self.querry(table_name=table_name, columns=columns + ['id'], filter=filter)
-
-            # Update values in the fetched rows
-            for row in rows_to_update:
-                for column, value in zip(columns, values):
-                    row[column] = value
-
-            # Read existing table data
-            table_data = _open_to_read(table_name=table_name, db_dir_path=self.default_dir_path, data_index="rows")
-
-            # Update the table data with the modified rows
-            updated_table = [row for row in table_data if row not in rows_to_update] + rows_to_update
-
-            # Write the updated table data back to the file
-            with open(f"{self.default_dir_path}/db/{table_name}.json", "w") as table_file:
-                json.dump(
-                    {
-                        "table_name": table_name,
-                        "meta_data": None,
-                        "table_columns": _get_columns(table_name, self.default_dir_path),
-                        "pk": "id",
-                        "rows": updated_table
-                    },
-                    table_file,
-                    indent=4
-                )
-
-            success_message("Data updated with success")
-
-        except Exception as e:
-            fail_message(f"Error updating data: {e}")
+        rows_to_update = self.querry(table=table, columns=columns, filter=filter)
 
     
-    def delete(self, table_name:str, column_to_filter:str, value_to_filter:str):
+    def delete(self, table:str, column_to_filter:str, value_to_filter:str):
         """### Deletes a row from the table
 
         Note: tries to pass a column that has a unique value, or sometimes an error can appear
         """
-        rows_to_delete = self.querry(table=table_name, filter=f"{column_to_filter} = {value_to_filter}")
+        rows_to_delete = self.querry(table=table, filter=f"{column_to_filter} = {value_to_filter}")
 
         if not rows_to_delete:
             print("No matching rows found to delete.")
             return
 
-        table_data = _open_to_read(table_name=table_name, db_dir_path=self.default_dir_path, data_index="rows")
+        table_data = _open_to_read(table_name=table, db_dir_path=self.default_dir_path, data_index="rows")
 
         new_table_data = [row for row in table_data if row not in rows_to_delete]
 
-        with open(f"{self.default_dir_path}/db/{table_name}.json", "w") as table_file:
-            json.dump(
-                {
-                    "table_name": table_name, 
-                    "meta_data": None, 
-                    "table_columns": _get_columns(table_name, self.default_dir_path), 
-                    "pk": "id", 
-                    "rows": new_table_data
-                },
-                table_file,
-                indent=4
-            )
+        with open(f"{self.default_dir_path}/db/{table}.json", "w") as table_file:
+            json.dump({"table_name": table, "meta_data": None, "table_columns": _get_columns(table, self.default_dir_path), "pk": "id", "rows": new_table_data}, table_file, indent=4)
 
         print(f"Rows with {column_to_filter}={value_to_filter} deleted successfully.")
 
@@ -228,7 +187,6 @@ def _open_to_write(table_name: str, db_dir_path: str = getcwd(), data_index: str
     If a index is passed, it will select the index to write the data.
     
     """
-
     check = _open_to_read(table_name=table_name, db_dir_path=db_dir_path, data_index=data_index)
 
     if data_to_write in check: return
@@ -409,4 +367,3 @@ def _to_list(_el):
 
 def _to_tuple(_el):
     return (_el)
-
