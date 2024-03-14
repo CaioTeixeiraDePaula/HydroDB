@@ -21,6 +21,8 @@ while i < 0:
     i+=1
 
 
-hydro.update(from_="TABLE_1", columns=['name', "age"], where="id <= 10", with_values=["BANANA", 55])
+# hydro.update(from_="TABLE_1", columns=['name', "age"], where="id <= 10", with_values=["BANANA", 55])
     
 # print(hydro.querry(from_="TABLE_1", columns=None, where="id <= 15"))
+
+hydro.delete(from_="TABLE_1", where="id <= 4")

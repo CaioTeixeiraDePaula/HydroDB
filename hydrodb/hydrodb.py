@@ -350,8 +350,6 @@ def _delete_row(path:str, table_name:str, command:str) -> ... :
         table:dict = json.load(table_file)
         table["ROWS"] = updated_table_rows
 
-    print(table)
-
     with open(table_path, 'w') as table_to_write:
         json.dump(table, table_to_write, indent=4)
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Get Started
@@ -44,60 +44,107 @@ your-project-folder
 
 ## Commands list
 
-Designed to be a very user-friendly module, `HydroDB` only has 6 functions to be called.
+Designed to be a very user-friendly module, `HydroDB` only has 6 operational functions and 4 observable functions to be called.
 
+## Operational Functions
 
-### Create()
+The opearional functions are thesigned to execute the CRUD 
+
+- C : create
+- R : read
+- U : update
+- D : delete
+
+1 of them are to `create`, 1 for `reade`, 3 for `update` and 1 for `delete`e
+
+    
+### create_table() --> `create`
 
 The create() function is designed for the creation of tables, along with the columns that each table possesses.
 
 ```python 
-hydro.create(
-    tables=["Table_1", "Table_2"], 
-    columns=(["name", "age"], ["model", "year", "value"]),
-    primary_key=["name", "model"]
+hydro.create_table(
+    tables="Table_1", 
+    columns=["name", "age"],
+    pk="name"
 )
 ```
-- `tables`: list --> The list of tables you want to create in the database. (Learn more about [lists](https://www.w3schools.com/python/python_lists.asp))
 
-- `columns`: tuple --> Columns are created for each table. (Learn more about [tuples](https://www.w3schools.com/python/python_tuples.asp))
+```json
+// Expected table structure
+{
+  "TABLE NAME": "TABLE_1",
+  "META DATA": null,
+  "TABLE COLUMNS": [
+    "name",
+    "age",
+  ],
+  "PK": "name",
+  "ROWS": []
+}
+```
+- `tables`: str --> Na name of the table to be created. (Learn more about [strings](https://www.w3schools.com/python/python_strings.asp))
 
-- `primary_key`: list --> Defines the primary key of the table.
+- `columns`: Lists --> The columns for the table. (Learn more about [lists](https://www.w3schools.com/python/python_lists.asp))
+
+- `pk`: str --> Defines the primary key of the table. If no values are passed, the primary-key will be the  `id`
 
 
-### Add()
+### add_row() --> `update`
 
 To add values to table's columns, uses the add() function.
 
 ```python
-hydro.add(
-    tables_names=["Table_1", "Table_2"],
-    into=(["name", "age"], ["model", "year", "value"]),
-    values=(["James", "34"], ["Hydro", 2024, "Best"])
+hydro.add_rows(
+    table_name="Table_1",
+    into_columns=["name", "age"],
+    values=["James", 34]
 )
 ```
-- `tables_names`: list --> Receives the tables that you want to add values.
+```json
+// Expected result
+{
+  "TABLE NAME": "TABLE_1",
+  "META DATA": null,
+  "TABLE COLUMNS": [
+    "name",
+    "age",
+  ],
+  "PK": "name",
+  "ROWS": [
+    {
+        "id": 1,
+        "values":{
+            "name": "James",
+            "age": 34
+        }
+    }
+  ]
+}
+```
 
-- `into`: tuple --> These are the columns of each table that will have a value added.
+- `tables_names`: str --> Receives the table that you want to add values.
 
-- `values`: tuple --> These are the values for each column selected.
+- `into`: list --> These are the columns of the table that will have a value added.
+
+- `values`: list --> These are the values for each column selected.
 
 
-### Quearry()
+### querry() --> `search`
 
 This function is used to get values from a table.
 
 
 ```python
-hydro.update(
-    table_name="Table_1",
+hydro.querry(
+    from_="Table_1",
     columns=["name", "age"],
-    filter="model = Hydro"
+    where="age = 34"
 )
 ```
 
 ```bash
-# expected output: [{"model":"Hydro, "year":2024}]
+# expected output: [{"id" : 1, "values" :{"name":"James", "age":34}}]
 ```
 **NOTE:** A string is returned
 
@@ -108,43 +155,73 @@ hydro.update(
 - `filter`: str --> Is the parameter to querry a specific group of elements or a single element. If non filter parameter is passed, the entire table will be returned.
 
 
-### Update()
+### update() --> `update`
 
 The update funcions serves to update values from rows, or a single row.
 If you want to update a single row, uses the element `id` as the filter parameter.
 
 ```python
 hydro.update(
-    table_name="Table_1",
+    from_="Table_1",
     columns=["name", "age"],
-    values=["Caio", 19],
-    filter="name = James"
+    where="name = James"
+    with_values=["Caio", 19],
 )
+```
+```json
+// Expectd result
+{
+  "TABLE NAME": "TABLE_1",
+  "META DATA": null,
+  "TABLE COLUMNS": [
+    "name",
+    "age",
+  ],
+  "PK": "name",
+  "ROWS": [
+    {
+        "id": 1,
+        "values":{
+            "name": "Caio",
+            "age": 19
+        }
+    }
+  ]
+}
 ```
 
 - `table_name`:str --> Is the table to update a row, or a group of rows.
 
 - `columns`:list --> These are the list you want to change of each row querried.
 
-- `values`:list --> The values to be updated to the current row data.
+- `where`:str --> Specifies the groupe of elements or a single element to be updated.
 
-- `filter`:str --> Specifies the groupe of elements or a single element to be updated.
+- `with_values`:list --> The values to be updated to the current row data.
 
-
-### Delete()
+### delete() --> `delete`
 
 This function removes an entire row from the table that has the specified value passed in.
 
 ```python
 hydro.delete(
-    table="Table_1",
-    column_to_filter="id",
-    value_to_filter=0
+    from_="Table_1",
+    where="id = 1",
 )
 ```
+```json
+// Expected result
+{
+  "TABLE NAME": "TABLE_1",
+  "META DATA": null,
+  "TABLE COLUMNS": [
+    "name",
+    "age",
+  ],
+  "PK": "name",
+  "ROWS": []
+}
+```
 
-- `table`: str --> Is the table to search the row.
+- `from_`: str --> Is the table to search the row.
 
-- `column_to_filter`: str --> Receives the column to be used as a filter for the desired row.
-
-- `value_to_filter`: Any --> Here is the value to look up.
+- `where`: str --> pecifies the groupe of elements or a single element to be updated.
