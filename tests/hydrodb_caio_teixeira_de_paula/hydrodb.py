@@ -92,10 +92,12 @@ def _create_db_dir(path:str, optional_path:str) -> None:
         
             for partial_path in splited_sec_path:
                 db_dir += f'/{partial_path}'
-                mkdir(db_dir)
+                try:
+                    mkdir(db_dir)
+                except FileExistsError as e:
+                    text_marker(f"{e}")
 
         db_dir += "/db"
-
         mkdir(db_dir)    
 
     except FileExistsError as e:
@@ -349,8 +351,6 @@ def _delete_row(path:str, table_name:str, command:str) -> ... :
     with open(table_path, "r+") as table_file:
         table:dict = json.load(table_file)
         table["ROWS"] = updated_table_rows
-
-    print(table)
 
     with open(table_path, 'w') as table_to_write:
         json.dump(table, table_to_write, indent=4)
