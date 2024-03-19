@@ -9,9 +9,8 @@ readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU GENERAL PUBLIC LICENSE",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Development Status :: 3"
 ]
 
 [project.urls]
