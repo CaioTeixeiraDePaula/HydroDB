@@ -1,4 +1,4 @@
-from hydrodb_caio_teixeira_de_paula import *
+from hydrodb import *
 import random
 from time import time
 
@@ -23,6 +23,6 @@ while i < 0:
 
 # hydro.update(from_="TABLE_1", columns=['name', "age"], where="id <= 10", with_values=["BANANA", 55])
     
-# print(hydro.querry(from_="TABLE_1", columns=None, where="id <= 15"))
+print(hydro.querry(from_="TABLE_1", columns=['name'], where="id = 15"))
 
 # hydro.delete(from_="TABLE_1", where="id <= 4")
