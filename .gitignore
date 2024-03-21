@@ -1,2 +1,5 @@
 db
 .pypirc
+dist
+/hydrodb.egg-info
+setup.py
